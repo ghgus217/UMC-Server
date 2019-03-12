@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.collection.MainPageRepository">
+
+
+    <select id="getTruckList" resultType="TruckSearchListVO">
+    SELECT
+        id, userId, categoryId, truckName, lat, lon, imageLink, startTime, endTime
+    FROM
+       Truck
+    </select>
+
+    <select id="getEventList" resultType="EventSearchListVO">
+        SELECT
+          id, userId, eventTitle, lat, lon, imageLink, startTime, endTime
+        FROM
+          Event
+    </select>
+
+    <select id="getTruckListWithKeyWord" parameterType="String" resultType="TruckSearchListVO">
+    SELECT
+        id, userId, categoryId, truckName, lat, lon, imageLink, startTime, endTime
+    FROM
+       Truck
+    WHERE truckName like CONCAT('%',#{keyword},'%')
+    </select>
+
+    <select id="getEventListWithKeyWord" parameterType="String" resultType="EventSearchListVO">
+        SELECT
+          id, userId, eventTitle, lat, lon, imageLink, startTime, endTime
+        FROM
+          Event
+        WHERE eventTitle like CONCAT('%',#{keyword},'%')
+    </select>
+
+</mapper>

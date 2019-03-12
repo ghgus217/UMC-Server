@@ -1,0 +1,54 @@
+package kr.ac.ajou.umc.service.user;
+
+import java.util.List;
+
+import kr.ac.ajou.umc.vo.user.UserCreateVO;
+import kr.ac.ajou.umc.vo.user.UserLoginVO;
+import kr.ac.ajou.umc.vo.user.UserUpdateVO;
+import kr.ac.ajou.umc.vo.user.UserVO;
+import kr.ac.ajou.umc.repository.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository repository;
+
+    public List<UserVO> getUserList() {
+        return repository.getUserList();
+    }
+
+    public UserVO getUser(long id)
+    {
+        return repository.getUser(id);
+    }
+
+    public UserVO addUser(UserCreateVO user) {
+
+        repository.addUser(user);
+
+        return repository.getUserWithLoginId(user.getLoginId());
+    }
+
+    public UserVO updateUser(UserUpdateVO user)
+    {
+        repository.updateUser(user);
+
+        return repository.getUserWithLoginId(user.getLoginId());
+    }
+
+    public void deleteUser(long id)
+    {
+        repository.deleteUser(id);
+    }
+
+    public UserVO login(UserLoginVO login)
+    {
+        return repository.login(login);
+    }
+
+
+
+}

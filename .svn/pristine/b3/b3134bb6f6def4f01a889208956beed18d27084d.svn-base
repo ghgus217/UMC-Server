@@ -1,0 +1,119 @@
+package kr.ac.ajou.umc.service.event;
+
+
+import kr.ac.ajou.umc.GpsDistanceCalc;
+import kr.ac.ajou.umc.repository.event.EventRepository;
+import kr.ac.ajou.umc.vo.event.*;
+import kr.ac.ajou.umc.vo.truck.TruckUpdateWithUserIdVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.*;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class EventService {
+
+    @Autowired
+    private EventRepository repository;
+
+    public List<EventVO> getEventList()
+    {
+        return repository.getEventList();
+    }
+
+    public List<EventSearchListVO> searchWithEventName(String eventTitle, EventGpsVO gps)
+    {
+
+        List<EventSearchListVO> result = repository.searchWithEventName(eventTitle);
+
+        //gps값을 이용하여 가까운 거리 순으로 정렬
+        //디폴트값 km 단위 기준으로 상위 표출
+        GpsDistanceCalc calc = GpsDistanceCalc.getGpsDistanceCaculator();
+
+        //GPS 거리 계산
+        for(int list_size = 0 ; list_size < result.size() ; list_size++)
+        {
+            double dist = calc.distance(result.get(list_size).getLat(), result.get(list_size).getLon(), gps.getLat(), gps.getLon(),"kilometer");
+            result.get(list_size).setDistance(dist);
+        }
+
+        //GPS 거리 순으로 정렬
+        calc.eventBubbleSort(result);
+
+        return result;
+    }
+
+    public void addEventImage(long eventId, FileInputStream fileStream)
+    {
+        String fileName = UUID.randomUUID().toString().replace("-", "");
+        String fileDir = "/home/chrow16/deploy/image/" + fileName;
+
+        try {
+
+            // 출력할 파일명과 읽어들일 파일명을지정한다.
+            File file = new File(fileDir);
+
+            InputStream inputStream = fileStream;
+
+            OutputStream outStream = new FileOutputStream(file);
+
+            // 읽어들일 버퍼크기를 메모리에 생성
+            byte[] buf = new byte[1024];
+
+            int len = 0;
+            // 끝까지 읽어들이면서 File 객체에 내용들을 쓴다
+
+            while ((len = inputStream.read(buf)) > 0){
+
+                outStream.write(buf, 0, len);
+
+            }
+            // Stream 객체를 모두 닫는다.
+
+            outStream.close();
+
+            inputStream.close();
+
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
+        EventUpdateVO euvo = new EventUpdateVO();
+        euvo.setId(eventId);
+        euvo.setImageLink(fileDir);
+
+        repository.updateEvent(euvo);
+    }
+
+    public EventDescriptionVO searchWithEventId(long eventId)
+    {
+        return repository.searchWithEventId(eventId);
+    }
+
+    public List<EventDescriptionVO> searchWithUserId(long userId)
+    {
+        return repository.searchWithUserId(userId);
+    }
+
+    public void addEvent(EventCreateVO event)
+    {
+        repository.addEvent(event);
+    }
+
+    public void updateEvent(EventUpdateVO event)
+    {
+        repository.updateEvent(event);
+    }
+
+    public void deleteEvent(long eventId)
+    {
+        repository.deleteEvent(eventId);
+    }
+}

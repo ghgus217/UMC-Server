@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.truck.TruckDocumentRepository">
+    <select id="getTruckDocumentList" resultType="TruckDocumentVO">
+        SELECT
+         truckId, documentName, imageLink, modifyTime
+        FROM
+          Truck_Document
+        ORDER BY truckId DESC
+    </select>
+
+    <select id="getTruckDocumentImage" parameterType="long" resultType="TruckDocumentLinkVO">
+        SELECT
+         truckId, imageLink, documentName
+        FROM
+          Truck_Document
+        WHERE
+          truckId = #{truckId}
+        ORDER BY modifyTime desc
+    </select>
+
+    <insert id="addTruckDocument" parameterType="TruckDocumentVO">
+        INSERT INTO Truck_Document
+          (truckId, documentName, imageLink, modifyTime)
+        VALUES
+          (#{truckId}, #{documentName}, #{imageLink},  now())
+    </insert>
+
+    <update id="updateTruckDocument" parameterType="TruckDocumentVO">
+        UPDATE Truck_Document SET
+        <if test="documentName != null">
+            documentName = #{documentName},
+        </if>
+        <if test="documentFileDir != null">
+            imageLink = #{imageLink},
+        </if>
+        WHERE truckId = #{truckId}
+    </update>
+
+    <delete id="deleteTruckDocument" parameterType="TruckDocumentVO">
+        DELETE FROM Truck_Document
+        WHERE truckId = #{truckId}
+    </delete>
+
+</mapper>

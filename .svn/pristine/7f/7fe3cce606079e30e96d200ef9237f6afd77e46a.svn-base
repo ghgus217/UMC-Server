@@ -1,0 +1,46 @@
+package kr.ac.ajou.umc.controller.truck;
+
+import kr.ac.ajou.umc.service.truck.TruckMenuService;
+import kr.ac.ajou.umc.vo.truck.TruckMenuVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class TruckMenuController {
+
+    Logger logger = LoggerFactory.getLogger(TruckMenuController.class);
+
+    @Autowired
+    public TruckMenuService service;
+
+    @GetMapping("/truckmenus")
+    public List<TruckMenuVO> showTruckMenuList()
+    {
+        logger.info("SHOW MENU LIST");
+
+        return service.getTruckMenuList();
+    }
+
+    @PostMapping("/truckmenu")
+    public void addTruckMenu(TruckMenuVO tmvo)
+    {
+        service.addTruckMenu(tmvo);
+    }
+
+    @PutMapping("/truckmenu/{truckId}")
+    public void updateTruckMenu(@PathVariable long truckId, TruckMenuVO tmvo)
+    {
+        service.updateTruckMenu(tmvo);
+    }
+
+    @DeleteMapping("/truckmenu/{truckId}")
+    public void deleteTruckMenu(@PathVariable long truckId, TruckMenuVO tmvo)
+    {
+        service.deleteTruckMenu(tmvo);
+    }
+
+}

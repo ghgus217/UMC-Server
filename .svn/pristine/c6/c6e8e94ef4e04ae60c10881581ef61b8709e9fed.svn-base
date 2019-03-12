@@ -1,0 +1,45 @@
+package kr.ac.ajou.umc.controller.event;
+
+import kr.ac.ajou.umc.service.event.EventMapService;
+import kr.ac.ajou.umc.vo.event.EventMapVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+@RestController
+public class EventMapController {
+
+    Logger logger = LoggerFactory.getLogger(EventApplyListController.class);
+
+    @Autowired
+    public EventMapService service;
+
+    @GetMapping("/eventmaps")
+    public List<EventMapVO> showEventMapList()
+    {
+        logger.info("SHOW EVENT MAP List");
+
+        return service.getEventMapList();
+    }
+
+    @PostMapping("/eventmap/{eventId}")
+    public void addEventMap(@PathVariable long eventId, EventMapVO emvo)
+    {
+        service.addEventMap(emvo);
+    }
+
+    @PutMapping("/eventmap/{eventId}")
+    public void updateEventMap(@PathVariable long eventId, EventMapVO emvo)
+    {
+        service.updateEventMap(emvo);
+    }
+
+    @DeleteMapping("/eventmap/{eventId}")
+    public void deleteEventMap(@PathVariable long eventId, EventMapVO emvo)
+    {
+        service.deleteEventMap(emvo);
+    }
+
+}

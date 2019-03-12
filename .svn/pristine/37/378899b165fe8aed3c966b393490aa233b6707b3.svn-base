@@ -1,0 +1,45 @@
+package kr.ac.ajou.umc.controller.truck;
+
+import kr.ac.ajou.umc.service.truck.TruckDocumentService;
+import kr.ac.ajou.umc.vo.truck.TruckDocumentVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class TruckDocumentController {
+
+    Logger logger = LoggerFactory.getLogger(TruckDocumentController.class);
+
+    @Autowired
+    private TruckDocumentService service;
+
+    @GetMapping("/truckdocuments")
+    public List<TruckDocumentVO> showTruckDocumentList()
+    {
+        logger.info("SHOW TRUCK DOCUMENT LIST");
+
+        return service.getTruckDocumentList();
+    }
+
+    @PostMapping("/truckdocument")
+    public void addTruckDocument(TruckDocumentVO tdvo)
+    {
+        service.addTruckDocument(tdvo);
+    }
+
+    @PutMapping("/truckdocument/{truckId}")
+    public void updateTruckDocument(@PathVariable long truckId, TruckDocumentVO tdvo)
+    {
+        service.updateTruckDocument(tdvo);
+    }
+
+    @DeleteMapping("/truckdocument/{truckId}")
+    public void deleteTruckDocument(@PathVariable long truckId, TruckDocumentVO tdvo)
+    {
+        service.deleteTruckDocument(tdvo);
+    }
+}

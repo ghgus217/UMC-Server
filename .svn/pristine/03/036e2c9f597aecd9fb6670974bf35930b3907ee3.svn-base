@@ -1,0 +1,75 @@
+package kr.ac.ajou.umc.vo.event;
+
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Date;
+
+public class EventUpdateVO {
+
+    @ApiModelProperty(notes = "primary key")
+    private long id;
+
+    @ApiModelProperty(notes = "이벤트 타이틀")
+    private String eventTitle;
+
+    @ApiModelProperty(notes = "이벤트 세부사항")
+    private String description;
+
+    @ApiModelProperty(notes = "이벤트 이미지 경로")
+    private String imageFileDir;
+
+    @ApiModelProperty(notes = "이벤트 시작시간")
+    private Date startTime;
+
+    @ApiModelProperty(notes = "이벤트 종료시간")
+    private Date endTime;
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getEventTitle() {
+        return eventTitle;
+    }
+
+    public void setEventTitle(String eventTitle) {
+        this.eventTitle = eventTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageFileDir() {
+        return imageFileDir;
+    }
+
+    public void setImageFileDir(String imageFileDir) {
+        this.imageFileDir = imageFileDir;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+}

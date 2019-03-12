@@ -1,0 +1,82 @@
+package kr.ac.ajou.umc.service.truck;
+
+import kr.ac.ajou.umc.repository.truck.TruckDocumentRepository;
+import kr.ac.ajou.umc.repository.truck.TruckReviewRepository;
+import kr.ac.ajou.umc.vo.truck.TruckDocumentVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.io.*;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class TruckDocumentService {
+
+    @Autowired
+    private TruckDocumentRepository repository;
+
+    public List<TruckDocumentVO> getTruckDocumentList()
+    {
+        return repository.getTruckDocumentList();
+    }
+
+    public void addTruckDocumentImage(long truckId, FileInputStream fileStream)
+    {
+        String fileName = UUID.randomUUID().toString().replace("-", "");
+        String fileDir = "/home/chrow16/deploy/image/" + fileName;
+        try {
+
+            // 출력할 파일명과 읽어들일 파일명을지정한다.
+            File file = new File(fileDir);
+
+            InputStream inputStream = fileStream;
+
+            OutputStream outStream = new FileOutputStream(file);
+
+            // 읽어들일 버퍼크기를 메모리에 생성
+            byte[] buf = new byte[1024];
+
+            int len = 0;
+            // 끝까지 읽어들이면서 File 객체에 내용들을 쓴다
+
+            while ((len = inputStream.read(buf)) > 0){
+
+                outStream.write(buf, 0, len);
+
+            }
+            // Stream 객체를 모두 닫는다.
+
+            outStream.close();
+
+            inputStream.close();
+
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        }
+
+        TruckDocumentVO tdvo = new TruckDocumentVO();
+        tdvo.setTruckId(truckId);
+        tdvo.setDocumentName(fileName);
+        tdvo.setImageLink(fileDir);
+
+        repository.addTruckDocument(tdvo);
+    }
+
+
+    public void updateTruckDocument(TruckDocumentVO tdvo)
+    {
+        repository.updateTruckDocument(tdvo);
+    }
+
+    public void deleteTruckDocument(TruckDocumentVO tdvo)
+    {
+        repository.deleteTruckDocument(tdvo);
+    }
+}

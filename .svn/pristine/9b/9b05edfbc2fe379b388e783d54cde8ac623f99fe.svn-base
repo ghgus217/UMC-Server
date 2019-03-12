@@ -1,0 +1,97 @@
+package kr.ac.ajou.umc.vo.truck;
+
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Date;
+
+public class TruckUpdateVO {
+
+    @ApiModelProperty(notes = "primary key")
+    private long id;
+
+    @ApiModelProperty(notes = "트럭 이름")
+    private String truckName;
+
+    @ApiModelProperty(notes = "트럭 위도 lat")
+    private double lat;
+
+    @ApiModelProperty(notes = "트럭 경도 lon")
+    private double lon;
+
+    @ApiModelProperty(notes = "트럭 세부내용")
+    private String description;
+
+    @ApiModelProperty(notes = "트럭 이미지 위치")
+    private String imageFileDir;
+
+    @ApiModelProperty(notes = "트럭 시작시간")
+    private Date startTime;
+
+    @ApiModelProperty(notes = "트럭 종료시간")
+    private Date endTime;
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTruckName() {
+        return truckName;
+    }
+
+    public void setTruckName(String truckName) {
+        this.truckName = truckName;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageFileDir() {
+        return imageFileDir;
+    }
+
+    public void setImageFileDir(String imageFileDir) {
+        this.imageFileDir = imageFileDir;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.truck.TruckReviewRepository">
+    <select id="getTruckReviewList" resultType="TruckReviewVO">
+        SELECT
+          id, truckId, userId, name, score, description, imageLink, modifyTime
+        FROM
+          Truck_Review
+        ORDER BY userId DESC
+    </select>
+
+    <select id="searchTruckReviewWithTruckId" parameterType="long" resultType="TruckReviewVO">
+        SELECT
+          id, truckId, userId, name, score, description, imageLink, modifyTime
+        FROM
+          Truck_Review
+        WHERE truckId = #{truckId}
+    </select>
+
+    <insert id="addTruckReview" parameterType="TruckReviewCreateVO">
+        INSERT INTO Truck_Review
+          (truckId, userId, name, score, description, imageLink, modifyTime)
+        VALUES
+          (#{truckId}, #{userId}, #{name}, #{score}, #{description}, #{imageLink}, now())
+    </insert>
+
+    <update id="updateTruckReview" parameterType="TruckReviewUpdateVO">
+        UPDATE Truck_Review SET
+        <if test="score != null">
+            score = #{score},
+        </if>
+        <if test="description != null">
+            description = #{description},
+        </if>
+        <if test="imageLink != null">
+            imageLink = #{imageLink},
+        </if>
+          modifyTime = now()
+        WHERE truckId = #{truckId} AND userId = #{userId}
+    </update>
+
+    <delete id="deleteTruckReview" parameterType="long">
+        DELETE FROM Truck_Review
+        WHERE id = #{reviewId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.truck.DailyTruckRepository">
+    <select id="getDailyTruckList" resultType="DailyTruckVO">
+        SELECT
+          truckId, description, startTime, endTime, modifyTime
+        FROM
+          Daily_Truck
+        ORDER BY truckId DESC
+    </select>
+
+    <insert id="addDailyTruck" parameterType="DailyTruckVO">
+        INSERT INTO Daily_Truck
+          (truckId, description, startTime, endTime, modifyTime)
+        VALUES
+          (#{truckId}, #{description}, #{startTime}, #{endTime}, now())
+    </insert>
+
+    <update id="updateDailyTruck" parameterType="DailyTruckVO">
+        UPDATE Daily_Truck SET
+        <if test="description != null">
+            description = #{description},
+        </if>
+        WHERE truckId = #{truckId}
+    </update>
+
+    <delete id="deleteDailyTruck" parameterType="DailyTruckVO">
+        DELETE FROM Daily_Truck
+        WHERE truckId = #{truckId}
+    </delete>
+</mapper>

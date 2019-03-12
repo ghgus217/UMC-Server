@@ -1,0 +1,21 @@
+package kr.ac.ajou.umc.repository.collection;
+
+import kr.ac.ajou.umc.vo.collection.MainPageTruckScoreVO;
+import kr.ac.ajou.umc.vo.event.EventSearchListVO;
+import kr.ac.ajou.umc.vo.truck.TruckScoreVO;
+import kr.ac.ajou.umc.vo.truck.TruckSearchListVO;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+@Mapper
+public interface MainPageRepository {
+
+    List<TruckSearchListVO> getTruckList();
+    List<EventSearchListVO> getEventList();
+    List<TruckSearchListVO> getTruckListWithKeyWord(String keyword);
+    List<EventSearchListVO> getEventListWithKeyWord(String keyword);
+    List<MainPageTruckScoreVO> calcTruckScore();
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.user.UserFavoriteListRepository">
+
+    <select id="getUserFavoriteList" resultType="UserFavoriteListVO">
+        SELECT
+          userId, truckId, modifyTime
+        FROM
+          User_Favorite_List
+        ORDER BY userId DESC
+    </select>
+
+    <select id="searchUserFavoriteListWithUserId" parameterType="long" resultType="TruckSearchListVO">
+        SELECT
+        id, userId, categoryId, truckName, lat, lon, startTime, endTime, imageLink
+        FROM
+          Truck
+        WHERE  id IN (
+          SELECT truckId
+          FROM User_Favorite_List
+          WHERE userId = #{userId}
+          )
+        ORDER BY userId DESC
+    </select>
+
+    <insert id="addUserFavoriteList" parameterType="UserFavoriteListVO">
+        INSERT INTO User_Favorite_List
+          (userId, truckId, modifyTime)
+        VALUES
+          (#{userId}, #{truckId}, now())
+    </insert>
+
+    <!--
+    <update id="updateUserFavoriteList" parameterType="UserFavoriteListVO">
+        UPDATE User_Favorite_List SET
+        <if test="userId != NULL">
+            userId = #(userId),
+        </if>
+        <if test="truckId != NULL">
+            truckId = #(truckId),
+        </if>
+        WHERE userId = #{userId}
+    </update>
+    -->
+
+    <delete id="deleteUserFavoriteList" parameterType="UserFavoriteListVO">
+        DELETE FROM User_Favorite_List
+        WHERE truckId = #{truckId} AND userId = #{userId}
+    </delete>
+
+</mapper>

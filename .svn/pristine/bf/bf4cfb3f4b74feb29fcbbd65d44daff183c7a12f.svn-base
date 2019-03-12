@@ -1,0 +1,67 @@
+package kr.ac.ajou.umc.service.truck;
+
+import kr.ac.ajou.umc.repository.truck.TruckDocumentRepository;
+import kr.ac.ajou.umc.repository.truck.TruckReviewRepository;
+import kr.ac.ajou.umc.vo.truck.TruckDocumentVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class TruckDocumentService {
+
+    @Autowired
+    private TruckDocumentRepository repository;
+
+    public List<TruckDocumentVO> getTruckDocumentList()
+    {
+        return repository.getTruckDocumentList();
+    }
+
+    public void addTruckDocumentImage(long truckId, MultipartFile file)
+    {
+        String fileName = UUID.randomUUID().toString().replace("-", "");
+        String fileDir = "/home/chrow16/deploy/image/" + fileName+".jpg";
+        try {
+
+            FileOutputStream fos;
+
+            byte fileData[] = file.getBytes();
+
+            fos = new FileOutputStream(fileDir);
+
+            fos.write(fileData);
+
+
+        } catch (FileNotFoundException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
+        TruckDocumentVO tdvo = new TruckDocumentVO();
+        tdvo.setTruckId(truckId);
+        tdvo.setDocumentName(fileName);
+        tdvo.setImageLink(fileDir);
+
+        repository.addTruckDocument(tdvo);
+    }
+
+
+    public void updateTruckDocument(TruckDocumentVO tdvo)
+    {
+        repository.updateTruckDocument(tdvo);
+    }
+
+    public void deleteTruckDocument(TruckDocumentVO tdvo)
+    {
+        repository.deleteTruckDocument(tdvo);
+    }
+}

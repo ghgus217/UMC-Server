@@ -1,0 +1,69 @@
+package kr.ac.ajou.umc.vo.truck;
+
+import java.sql.Timestamp;
+
+public class TruckReviewVO {
+    private long truckId;
+    private long userId;
+    private String name;
+    private int score;
+    private String description;
+    private String imageFileDir;
+    private Timestamp modifyTime;
+
+    public long getTruckId() {
+        return truckId;
+    }
+
+    public void setTruckId(long truckId) {
+        this.truckId = truckId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageFileDir() {
+        return imageFileDir;
+    }
+
+    public void setImageFileDir(String imageFileDir) {
+        this.imageFileDir = imageFileDir;
+    }
+
+    public Timestamp getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Timestamp modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+}

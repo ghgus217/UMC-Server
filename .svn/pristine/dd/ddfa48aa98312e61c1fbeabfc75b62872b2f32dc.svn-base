@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.truck.TruckRepository">
+
+    <select id="getTruckList" resultType="TruckVO">
+        SELECT
+          id, userId, categoryId, truckName, lat, lon, description, imageFileDir, startTime, endTime, modifyTime
+        FROM
+          Truck
+        ORDER BY id  DESC
+    </select>
+
+    <select id="searchWithTruckName" parameterType="String" resultType="TruckSearchListVO">
+        SELECT
+          id, userId, categoryId, truckName, imageFileDir
+        FROM
+          Truck
+        WHERE truckName like CONCAT('%',#{truckName},'%')
+        ORDER BY id  DESC
+    </select>
+
+    <select id="searchWithTruckId" parameterType="long" resultType="TruckDescriptionVO">
+        SELECT
+          id, userId, categoryId, truckName, lat, lon, description, imageFileDir, startTime, endTime, modifyTime
+        FROM
+          Truck
+        WHERE id = #{id}
+    </select>
+
+    <insert id="addTruck" parameterType="TruckCreateVO">
+        INSERT INTO Truck
+          (userId, categoryId, truckName, lat, lon, description, imageFileDir, startTime, endTime, modifyTime)
+        VALUES
+          (#{userId}, #{categoryId}, #{truckName}, #{lat} ,#{lon} ,#{description} ,#{startTime}, #{endTime}, now())
+    </insert>
+
+    <update id="updateTruck" parameterType="TruckUpdateVO">
+        UPDATE Truck SET
+        <if test="categoryId != NULL">
+            categoryId = #(categoryId),
+        </if>
+        <if test="truckName != NULL">
+            truckName = #(truckName),
+        </if>
+        <if test="lat != NULL">
+            lat = #(lat),
+        </if>
+        <if test="lon != NULL">
+            lon = #(lon),
+        </if>
+        <if test="description != NULL">
+            description = #(description),
+        </if>
+        <if test="imageFileDir != NULL">
+            imageFileDir = #(imageFileDir),
+        </if>
+        <if test="startTime != NULL">
+            startTime = #(startTime),
+        </if>
+        <if test="endTime != NULL">
+            endTime = #(endTime),
+        </if>
+            modifyTime = now(),
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteTruck" parameterType="long">
+        DELETE FROM Truck
+        WHERE id = #{id}
+    </delete>
+
+
+
+</mapper>

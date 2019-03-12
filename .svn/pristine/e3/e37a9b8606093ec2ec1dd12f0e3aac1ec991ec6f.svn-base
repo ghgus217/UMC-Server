@@ -1,0 +1,90 @@
+package kr.ac.ajou.umc;
+
+import kr.ac.ajou.umc.vo.truck.TruckSearchListVO;
+
+import java.util.List;
+
+public class GpsDistanceCalc {
+
+    private static GpsDistanceCalc calc;
+
+    /**
+     * 두 지점간의 거리 계산
+     * @param lat1 지점 1 위도
+     * @param lon1 지점 1 경도
+     * @param lat2 지점 2 위도
+     * @param lon2 지점 2 경도
+     * @param unit 거리 표출단위
+     * @return
+     **/
+    public double distance(double lat1, double lon1, double lat2, double lon2, String unit) {
+
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+
+        if (unit == "kilometer") {
+            dist = dist * 1.609344;
+        } else if(unit == "meter"){
+            dist = dist * 1609.344;
+        }
+
+        return dist;
+    }
+
+
+    // 데시멀 to 라디안
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    // 라디안 to 데시멀
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+
+
+    public int truckPartition(List<TruckSearchListVO> list, int left, int right) {
+
+        double pivot = list.get((left + right) / 2).getDistance();
+
+        while (left < right) {
+            while ((list.get(left).getDistance() < pivot) && (left < right))
+                left++;
+            while ((list.get(right).getDistance() > pivot) && (left < right))
+                right--;
+
+            if (left < right) {
+                double temp = list.get(left).getDistance();
+                list.get(left).setDistance(list.get(right).getDistance());
+                list.get(right).setDistance(temp);
+            }
+        }
+
+        return left;
+    }
+
+
+    public void truckQuickSort(List<TruckSearchListVO> list, int left, int right) {
+
+        if (left < right) {
+            int pivotNewIndex = truckPartition(list, left, right);
+            truckQuickSort(list, left, pivotNewIndex - 1);
+            truckQuickSort(list, pivotNewIndex + 1, right);
+        }
+
+    }
+
+
+
+    public static GpsDistanceCalc getGpsDistanceCaculator()
+    {
+        if(calc == null)
+            calc = new GpsDistanceCalc();
+
+        return calc;
+    }
+}

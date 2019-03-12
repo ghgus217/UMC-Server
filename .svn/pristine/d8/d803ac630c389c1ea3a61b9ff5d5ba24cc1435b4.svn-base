@@ -1,0 +1,33 @@
+package kr.ac.ajou.umc.vo.user;
+
+import java.sql.Date;
+
+public class UserFavoriteListVO {
+    private long userId;
+    private long truckId;
+    private Date modifyTime;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public long getTruckId() {
+        return truckId;
+    }
+
+    public void setTruckId(long truckId) {
+        this.truckId = truckId;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+}

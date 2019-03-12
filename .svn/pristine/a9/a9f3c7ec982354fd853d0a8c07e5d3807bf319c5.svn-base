@@ -1,0 +1,17 @@
+package kr.ac.ajou.umc.vo.truck;
+
+import io.swagger.annotations.ApiModelProperty;
+
+public class TruckScoreVO {
+
+    @ApiModelProperty(notes = "score")
+    private int socre;
+
+    public int getSocre() {
+        return socre;
+    }
+
+    public void setSocre(int socre) {
+        this.socre = socre;
+    }
+}

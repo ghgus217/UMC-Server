@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.truck.TruckMenuRepository">
+    <select id="getTruckMenuList" resultType="TruckMenuVO">
+        SELECT
+          truckId, foodName, description, price, imageLink, modifyTime
+        FROM
+          Truck_Menu
+        ORDER BY truckId DESC
+    </select>
+
+    <select id="searchTruckMenuWithTruckId" parameterType="long" resultType="TruckMenuVO">
+        SELECT
+          truckId, foodName, description, price, imageLink, modifyTime
+        FROM
+          Truck_Menu
+        WHERE truckId = #{truckId}
+    </select>
+
+    <insert id="addTruckMenu" parameterType="TruckMenuVO">
+        INSERT INTO Truck_Menu
+          (truckId, foodName, description, price, imageLink, modifyTime)
+        VALUES
+          (#{truckId}, #{foodName}, #{description}, #{price}, #{imageLink}, now())
+    </insert>
+
+    <update id="updateTruckMenu" parameterType="TruckMenuVO">
+        UPDATE Truck_Menu SET
+        <if test="foodName != null">
+            foodName = #{foodName},
+        </if>
+        <if test="description != null">
+            description = #{description},
+        </if>
+        <if test="price != null">
+            price = #{price},
+        </if>
+        <if test="imageLink != null">
+            imageLink = #{imageLink},
+        </if>
+        WHERE truckId = #{truckId}
+    </update>
+
+    <delete id="deleteTruckMenu" parameterType="TruckMenuDeleteVO">
+        DELETE FROM Truck_Menu
+        WHERE truckId = #{truckId} AND foodName = #{foodName}
+    </delete>
+
+    <delete id="deleteWholeTruckMenu" parameterType="long">
+        DELETE FROM Truck_Menu
+        WHERE truckId = #{truckId}
+    </delete>
+
+</mapper>

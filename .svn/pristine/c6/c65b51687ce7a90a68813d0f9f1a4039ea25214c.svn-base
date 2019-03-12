@@ -1,0 +1,44 @@
+package kr.ac.ajou.umc.service.user;
+
+import kr.ac.ajou.umc.repository.user.UserFavoriteListRepository;
+import kr.ac.ajou.umc.vo.truck.TruckDescriptionVO;
+import kr.ac.ajou.umc.vo.truck.TruckSearchListVO;
+import kr.ac.ajou.umc.vo.user.UserFavoriteListVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserFavoriteListService {
+
+    @Autowired
+    private UserFavoriteListRepository repository;
+
+    public List<UserFavoriteListVO> getUserFavoriteList()
+    {
+        return repository.getUserFavoriteList();
+    }
+
+    public List<TruckSearchListVO> searchUserFavoriteListWithUserId(long userId)
+    {
+        return repository.searchUserFavoriteListWithUserId(userId);
+    }
+
+    public void addUserFavoriteList(UserFavoriteListVO uflvo)
+    {
+        repository.addUserFavoriteList(uflvo);
+    }
+
+    /*
+    public void updateUserFavoriteList(UserFavoriteListVO uflvo)
+    {
+        repository.updateUserFavoriteList(uflvo);
+    }
+    */
+
+    public void deleteUserFavoriteList(UserFavoriteListVO uflvo)
+    {
+        repository.deleteUserFavoriteList(uflvo);
+    }
+}

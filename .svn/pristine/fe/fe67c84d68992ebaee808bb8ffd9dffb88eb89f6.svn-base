@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.event.EventRepository">
+    <select id="getEventList" resultType="EventVO">
+        SELECT
+          id, userId, eventTitle, lat, lon, description, startTime, endTime, modifyTime
+        FROM
+          Event
+        ORDER BY id DESC
+    </select>
+
+    <select id="searchWithEventName" resultType="EventSearchListVO">
+        SELECT
+          id, userId, eventTitle, lat, lon, startTime, endTime
+        FROM
+          Event
+        WHERE eventTitle like CONCAT('%',#{eventTitle},'%')
+    </select>
+
+    <select id="searchWithEventId" parameterType="long" resultType="EventDescriptionVO">
+        SELECT
+          id, userId, eventTitle, lat, lon, description, startTime, endTime
+        FROM
+          Event
+        WHERE id = #{eventId}
+    </select>
+
+    <insert id="addEvent" parameterType="EventCreateVO">
+        INSERT INTO Event
+          (userId, eventTitle, lat, lon, description, startTime, endTime, modifyTime)
+        VALUES
+          (#{userId}, #{eventTitle},#{lat}, #{lon}, #{description}, #{startTime}, #{endTime}, now())
+    </insert>
+
+    <update id="updateEvent" parameterType="EventUpdateVO">
+        UPDATE Event SET
+        <if test="eventTitle != null">
+            eventTitle = #{eventTitle},
+        </if>
+        <if test="lat != null">
+            lat = #{lat},
+        </if>
+        <if test="lon != null">
+            lon = #{lon},
+        </if>
+        <if test="description != null">
+            description = #{description},
+        </if>
+        <if test="imageFileDir != null">
+            imageFileDir = #{imageFileDir},
+        </if>
+        <if test="startTime != null">
+            startTime = #{startTime},
+        </if>
+        <if test="endTime != null">
+            endTime = #{endTime},
+        </if>
+          modifyTime = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteEvent" parameterType="long">
+        DELETE FROM Event
+        WHERE Id = #{eventId}
+    </delete>
+
+</mapper>

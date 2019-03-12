@@ -1,0 +1,42 @@
+package kr.ac.ajou.umc.vo.truck;
+
+import java.sql.Timestamp;
+
+public class TruckDocumentVO {
+    private long truckId;
+    private String documentName;
+    private String documentFileDir;
+    private Timestamp modifyTime;
+
+    public long getTruckId() {
+        return truckId;
+    }
+
+    public void setTruckId(long truckId) {
+        this.truckId = truckId;
+    }
+
+    public String getDocumentName() {
+        return documentName;
+    }
+
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
+
+    public String getDocumentFileDir() {
+        return documentFileDir;
+    }
+
+    public void setDocumentFileDir(String documentFileDir) {
+        this.documentFileDir = documentFileDir;
+    }
+
+    public Timestamp getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Timestamp modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+}

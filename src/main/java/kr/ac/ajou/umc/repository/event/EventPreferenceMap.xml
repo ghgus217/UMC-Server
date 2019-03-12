@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.event.EventPreferenceMapRepository">
+    <select id="getEventPreferenceMapList" resultType="EventPreferenceMapVO">
+        SELECT
+          eventId, truckId, positionName, preferLevel, modifyTime
+        FROM
+          Event_Preference_Map
+        ORDER BY eventId DESC
+    </select>
+
+    <insert id="addEventPreferenceMap" parameterType="EventPreferenceMapVO">
+        INSERT INTO Event_Preference_Map
+          (eventId, truckId, positionName, preferLevel, modifyTime)
+        VALUES
+          (#{eventId}, #{truckId}, #{positionName}, #{preferLevel}, now())
+    </insert>
+
+    <update id="updateEventPreferenceMap" parameterType="EventPreferenceMapVO">
+        UPDATE Event_Preference_Map SET
+        <if test="positionName != null">
+            positionName = #{positionName},
+        </if>
+        WHERE eventId = #{eventId}
+    </update>
+
+    <delete id="deleteEventPreferenceMap" parameterType="EventPreferenceMapVO">
+        DELETE FROM Event_Preference_Map
+        WHERE eventId = #{eventId}
+    </delete>
+
+</mapper>

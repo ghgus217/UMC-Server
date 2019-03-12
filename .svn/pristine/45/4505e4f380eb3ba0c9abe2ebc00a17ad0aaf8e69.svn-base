@@ -1,0 +1,33 @@
+package kr.ac.ajou.umc.vo.truck;
+
+import java.sql.Timestamp;
+
+public class TruckCategoryVO {
+    private long id;
+    private  String category;
+    private Timestamp modifyTime;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Timestamp getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Timestamp modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+}

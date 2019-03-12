@@ -1,0 +1,45 @@
+package kr.ac.ajou.umc.controller.truck;
+
+import kr.ac.ajou.umc.service.truck.TruckReviewService;
+import kr.ac.ajou.umc.vo.truck.TruckReviewVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class TruckReviewController {
+
+    private Logger logger = LoggerFactory.getLogger(TruckController.class);
+
+    @Autowired
+    private TruckReviewService service;
+
+    @GetMapping("/truckreviews")
+    public List<TruckReviewVO> showTruckReviewList()
+    {
+        logger.info("SHOW TRUCK REVIEW");
+
+        return service.getTruckReviewList();
+    }
+
+    @PostMapping("/truckreview/{truckId}")
+    public void addTruckReview(@PathVariable long truckId, TruckReviewVO trvo)
+    {
+        service.addTruckReview(trvo);
+    }
+
+    @PutMapping("/truckreview/{truckId}")
+    public void updateTruckReview(@PathVariable long truckId, TruckReviewVO trvo)
+    {
+        service.updateTruckReview(trvo);
+    }
+
+    @DeleteMapping("/truckreview/{truckId}")
+    public void deleteTruckReview(@PathVariable long truckId, TruckReviewVO trvo)
+    {
+        service.deleteTruckReview(trvo);
+    }
+}

@@ -1,0 +1,16 @@
+package kr.ac.ajou.umc.repository.event;
+
+import kr.ac.ajou.umc.vo.event.EventMapVO;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+@Mapper
+public interface EventMapRepository {
+    List<EventMapVO> getEventMapList();
+    void addEventMap(EventMapVO emvo);
+    void updateEventMap(EventMapVO emvo);
+    void deleteEventMap(EventMapVO emvo);
+}

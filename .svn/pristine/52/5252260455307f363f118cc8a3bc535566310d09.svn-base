@@ -1,0 +1,18 @@
+package kr.ac.ajou.umc.repository.user;
+
+import kr.ac.ajou.umc.vo.user.UserFavoriteListVO;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+@Mapper
+public interface UserFavoriteListRepository {
+
+    List<UserFavoriteListVO> getUserFavoriteList();
+    void addUserFavoriteList(UserFavoriteListVO uflvo);
+    void updateUserFavoriteList(UserFavoriteListVO uflvo);
+    void deleteUserFavoriteList(UserFavoriteListVO uflvo);
+
+}

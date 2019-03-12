@@ -1,0 +1,71 @@
+package kr.ac.ajou.umc.controller.user;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import kr.ac.ajou.umc.service.user.UserFavoriteListService;
+import kr.ac.ajou.umc.vo.truck.TruckDescriptionVO;
+import kr.ac.ajou.umc.vo.truck.TruckGpsVO;
+import kr.ac.ajou.umc.vo.truck.TruckSearchListVO;
+import kr.ac.ajou.umc.vo.user.UserFavoriteListVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Api(description = "유저 즐겨찾기 API")
+@RestController
+public class UserFavoriteListController {
+
+    private Logger logger = LoggerFactory.getLogger(UserFavoriteListController.class);
+
+    @Autowired
+    public UserFavoriteListService service;
+
+    @ApiOperation(value = "전체 즐겨찾기 조회")
+    @GetMapping("/userfavoritelist")
+    public List<UserFavoriteListVO> showUserFavoriteList()
+    {
+        logger.info("SHOW USER FAVORITE LIST");
+
+        return service.getUserFavoriteList();
+    }
+
+    @ApiOperation(value = "유저 id를 이용한 즐겨찾기 조회")
+    @PostMapping("/userfavoritelistsearch/{userId}")
+    public List<TruckSearchListVO> searchUserFavoriteListWithUserId(@PathVariable long userId, @RequestBody TruckGpsVO gps )
+    {
+        logger.info("SHOW USER FAVORITE LIST");
+
+        return service.searchUserFavoriteListWithUserId(userId, gps);
+    }
+
+
+    @ApiOperation(value = "유저 id를 이용한 즐겨찾기 추가")
+    @PostMapping("/userfavoritelist/{userId}")
+    public void addUserFavoriteList(@PathVariable long userId, @RequestBody UserFavoriteListVO uflvo)
+    {
+        logger.info("유저 id를 이용한 즐겨찾기 추가");
+        uflvo.setUserId(userId);
+        service.addUserFavoriteList(uflvo);
+    }
+
+    /*
+    @PutMapping("/userfavoritelist/{userId}")
+    public void updateUserFavoriteList(@PathVariable long userId, UserFavoriteListVO uflvo)
+    {
+        service.updateUserFavoriteList(uflvo);
+    }
+    */
+
+    @ApiOperation(value = "유저 id를 이용한 즐겨찾기 삭제")
+    @DeleteMapping("/userfavoritelist/{userId}")
+    public void deleteUserFavoriteList(@PathVariable long userId, @RequestBody  UserFavoriteListVO uflvo)
+    {
+        logger.info("유저 id를 이용한 즐겨찾기 삭제");
+        uflvo.setUserId(userId);
+        service.deleteUserFavoriteList(uflvo);
+    }
+
+}

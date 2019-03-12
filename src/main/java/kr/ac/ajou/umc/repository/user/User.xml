@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.user.UserRepository">
+
+
+    <select id="getUserList" resultType="UserVO">
+        SELECT
+          id, loginId, userCategoryId, pw, name, phoneNum, modifyTime
+        FROM
+          User
+        ORDER BY id DESC
+    </select>
+
+    <select id="getUser" parameterType="long" resultType="UserVO">
+        SELECT
+          id, loginId, userCategoryId, pw, name, phoneNum, modifyTime
+        FROM
+          User
+        where id = #{id}
+    </select>
+
+    <select id="login" parameterType="UserLoginVO" resultType="UserVO">
+        SELECT
+          id, loginId, userCategoryId, pw, name, phoneNum, modifyTime
+        FROM
+          User
+        WHERE loginId = #{loginId} AND pw = #{pw}
+    </select>
+
+    <select id="getUserWithLoginId" parameterType="String" resultType="UserVO">
+        SELECT
+          id, loginId, userCategoryId, pw, name, phoneNum, modifyTime
+        FROM
+          User
+        WHERE loginId = #{loginId}
+    </select>
+
+    <insert id="addUser" parameterType="UserVO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO User
+          (loginId, userCategoryId, pw, name, phoneNum, modifyTime)
+        VALUES
+          (#{loginId}, #{userCategoryId}, #{pw}, #{name}, #{phoneNum}, now())
+    </insert>
+
+    <update id="updateUser" parameterType="UserVO" useGeneratedKeys="true" keyProperty="id">
+        UPDATE User SET
+        <if test="loginId != null">
+            loginId = #{loginId},
+        </if>
+        <if test="pw != null">
+            pw = #{pw},
+        </if>
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="phoneNum != null">
+            phoneNum = #{phoneNum},
+        </if>
+          modifyTime = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="long">
+        DELETE FROM User
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

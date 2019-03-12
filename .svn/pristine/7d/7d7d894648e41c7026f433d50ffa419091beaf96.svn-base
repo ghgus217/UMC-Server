@@ -1,0 +1,89 @@
+package kr.ac.ajou.umc.controller.truck;
+
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import kr.ac.ajou.umc.service.truck.TruckService;
+import kr.ac.ajou.umc.vo.truck.*;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Api(description = "트럭 API")
+@RestController
+public class TruckController {
+
+    private Logger logger  = LoggerFactory.getLogger(TruckController.class);
+
+    @Autowired
+    private TruckService service;
+
+    @ApiOperation(value = "전체 트럭 리스트 조회")
+    @GetMapping("/trucks")
+    public List<TruckVO> showTruckList()
+    {
+        logger.info("SHOW ALL TRUCK LIST");
+
+        List<TruckVO> result = service.getTruckList();
+
+        return result;
+    }
+
+    @ApiOperation(value = "트럭 이름으로 검색")
+    @GetMapping("/truckName/{truckName}")
+    public List<TruckSearchListVO> searchWithTruckName(@PathVariable String truckName, @RequestBody TruckGpsVO gps)
+    {
+        logger.info("SEARCH WITH TRUCK NAME");
+
+        List<TruckSearchListVO> result = service.searchWithTruckName(truckName, gps);
+
+        return result;
+    }
+
+    @ApiOperation(value = "트럭 id로 세부정보 조회하기")
+    @GetMapping("/truckId/{id}")
+    public TruckDescriptionVO searchWithTruckId(@PathVariable long id)
+    {
+        logger.info("SEARCH WITH TRUCK ID");
+
+        TruckDescriptionVO result = service.searchWithTruckId(id);
+
+        return result;
+    }
+
+    @ApiOperation(value = "새로운 트럭 등록")
+    @PostMapping("/truck")
+    public void addTruck(@RequestBody TruckCreateVO truck)
+    {
+        logger.info("ADD TRUCK");
+
+        service.addTruck(truck);
+    }
+
+    @ApiOperation(value = "트럭 정보 수정")
+    @PutMapping("/truck/{id}")
+    public void updateTruck(@PathVariable long id, @RequestBody TruckUpdateVO truck)
+    {
+        logger.info("UPDATE TRUCK INFORMATION");
+
+        truck.setId(id);
+
+        service.updateTruck(truck);
+    }
+
+    @ApiOperation(value = "트럭 정보 삭제")
+    @DeleteMapping("/truck/{id}")
+    public void deleteTruck(@PathVariable long id)
+    {
+        logger.info("DELETE TRUCK");
+
+        service.deleteTruck(id);
+    }
+
+
+
+
+}

@@ -1,0 +1,94 @@
+package kr.ac.ajou.umc.vo.truck;
+
+import io.swagger.annotations.ApiModelProperty;
+
+public class TruckSearchListVO {
+
+    @ApiModelProperty(notes = "primary key")
+    private long id;
+
+    @ApiModelProperty(notes = "트럭 소유자 id")
+    private long userId;
+
+    @ApiModelProperty(notes = "푸드트럭 카테고리 id")
+    private long categoryId;
+
+    @ApiModelProperty(notes = "트럭 이름")
+    private String truckName;
+
+    @ApiModelProperty(notes = "트럭 위도 lat")
+    private double lat;
+
+    @ApiModelProperty(notes = "트럭 경도 lon")
+    private double lon;
+
+    @ApiModelProperty(notes = "사용자 gps 와 트럭 사이의 거리")
+    private double distance;
+
+    @ApiModelProperty(notes = "트럭 이미지 위치")
+    private String imageFileDir;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getTruckName() {
+        return truckName;
+    }
+
+    public void setTruckName(String truckName) {
+        this.truckName = truckName;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public String getImageFileDir() {
+        return imageFileDir;
+    }
+
+    public void setImageFileDir(String imageFileDir) {
+        this.imageFileDir = imageFileDir;
+    }
+}

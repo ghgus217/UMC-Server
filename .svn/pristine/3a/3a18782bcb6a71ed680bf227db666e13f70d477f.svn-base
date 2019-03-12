@@ -1,0 +1,36 @@
+package kr.ac.ajou.umc.service.truck;
+
+import kr.ac.ajou.umc.repository.truck.TruckRepository;
+import kr.ac.ajou.umc.repository.truck.TruckReviewRepository;
+import kr.ac.ajou.umc.vo.truck.TruckReviewVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class TruckReviewService {
+
+    @Autowired
+    private TruckReviewRepository repository;
+
+    public List<TruckReviewVO> getTruckReviewList()
+    {
+        return repository.getTruckReviewList();
+    }
+
+    public void addTruckReview(TruckReviewVO trvo)
+    {
+        repository.addTruckReview(trvo);
+    }
+
+    public void updateTruckReview(TruckReviewVO trvo)
+    {
+        repository.updateTruckReview(trvo);
+    }
+
+    public void deleteTruckReview(TruckReviewVO trvo)
+    {
+        repository.deleteTruckReview(trvo);
+    }
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.event.EventRepository">
+
+    <select id="getEventApplyList" resultType="EventApplyListVO">
+        SELECT
+          eventId, truckId, modifyTime
+        FROM
+          Event_Apply_List
+        ORDER BY eventId DESC
+    </select>
+
+    <insert id="addEventApplyList" parameterType="EventApplyListVO">
+        INSERT INTO Event_Apply_List
+          (eventId, truckId, modifyTime)
+        VALUES
+          (#{eventId}, #{truckId}, now())
+    </insert>
+
+    <update id="updateEventApplyList" parameterType="EventApplyListVO">
+        UPDATE Event_Apply_List SET
+        <if test="truckId != null">
+            truckId = #{truckId},
+        </if>
+        WHERE eventId = #{eventId}
+    </update>
+
+    <delete id="deleteEventApplyList" parameterType="EventApplyListVO">
+        DELETE FROM Event_Apply_List
+        WHERE eventId = #{eventId}
+    </delete>
+
+</mapper>

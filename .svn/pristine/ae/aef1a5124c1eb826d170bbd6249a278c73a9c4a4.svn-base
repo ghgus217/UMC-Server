@@ -1,0 +1,76 @@
+package kr.ac.ajou.umc.controller.truck;
+
+
+import kr.ac.ajou.umc.service.truck.TruckService;
+import kr.ac.ajou.umc.vo.truck.TruckVO;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class TruckController {
+
+    private Logger logger  = LoggerFactory.getLogger(TruckController.class);
+
+    @Autowired
+    private TruckService service;
+
+    @GetMapping("/trucks")
+    public List<TruckVO> showTruckList()
+    {
+        logger.info("SHOW ALL TRUCK LIST");
+
+        List<TruckVO> result = service.getTruckList();
+
+        return result;
+    }
+
+
+    @GetMapping("/truckName/{truckName}")
+    public List<TruckVO> searchTruckName(@PathVariable String truckName)
+    {
+        logger.info("SHOW SEARCH RESULT BY TRUCK NAME");
+
+        List<TruckVO> result = service.searchTruckName(truckName);
+
+        return result;
+    }
+
+    @PostMapping("/truck/{id}")
+    public void addTruck(@PathVariable long id, TruckVO truck)
+    {
+        logger.info("ADD TRUCK");
+
+        truck.setId(id);
+
+        service.addTruck(truck);
+    }
+
+
+    @PutMapping("/truck/{id}")
+    public void updateTruck(@PathVariable long id, TruckVO truck)
+    {
+        logger.info("UPDATE TRUCK INFORMATION");
+
+        truck.setId(id);
+
+        service.updateTruck(truck);
+    }
+
+    @DeleteMapping("/truck/{id}")
+    public void deleteTruck(@PathVariable long id, TruckVO truck)
+    {
+        logger.info("DELETE TRUCK");
+
+        truck.setId(id);
+
+        service.deleteTruck(truck);
+    }
+
+
+
+
+}

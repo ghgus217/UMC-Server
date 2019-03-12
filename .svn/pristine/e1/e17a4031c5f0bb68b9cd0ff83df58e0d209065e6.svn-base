@@ -1,0 +1,36 @@
+package kr.ac.ajou.umc.service.truck;
+
+import kr.ac.ajou.umc.repository.truck.TruckDocumentRepository;
+import kr.ac.ajou.umc.repository.truck.TruckReviewRepository;
+import kr.ac.ajou.umc.vo.truck.TruckDocumentVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class TruckDocumentService {
+
+    @Autowired
+    private TruckDocumentRepository repository;
+
+    public List<TruckDocumentVO> getTruckDocumentList()
+    {
+        return repository.getTruckDocumentList();
+    }
+
+    public void addTruckDocument(TruckDocumentVO tdvo)
+    {
+        repository.addTruckDocument(tdvo);
+    }
+
+    public void updateTruckDocument(TruckDocumentVO tdvo)
+    {
+        repository.updateTruckDocument(tdvo);
+    }
+
+    public void deleteTruckDocument(TruckDocumentVO tdvo)
+    {
+        repository.deleteTruckDocument(tdvo);
+    }
+}

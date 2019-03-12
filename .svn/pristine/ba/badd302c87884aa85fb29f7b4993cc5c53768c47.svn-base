@@ -1,0 +1,63 @@
+package kr.ac.ajou.umc.controller.truck;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import kr.ac.ajou.umc.service.truck.TruckDocumentService;
+import kr.ac.ajou.umc.vo.truck.TruckDocumentLinkVO;
+import kr.ac.ajou.umc.vo.truck.TruckDocumentVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.annotation.MultipartConfig;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.List;
+
+@Api(description = "트럭 서류 API")
+@RestController
+public class TruckDocumentController {
+
+    Logger logger = LoggerFactory.getLogger(TruckDocumentController.class);
+
+    @Autowired
+    private TruckDocumentService service;
+
+    @ApiOperation(value = "전체 트럭 서류 목록 조회")
+    @GetMapping("/truckdocuments")
+    public List<TruckDocumentVO> showTruckDocumentList()
+    {
+        logger.info("SHOW TRUCK DOCUMENT LIST");
+
+        return service.getTruckDocumentList();
+    }
+
+    @ApiOperation(value = "트럭 서류 이미지 업로드")
+    @PostMapping("/truckdocument/{truckId}")
+    public void addTruckDocumentImage(@PathVariable long truckId, @RequestBody MultipartFile file)
+    {
+        service.addTruckDocumentImage(truckId, file);
+    }
+
+
+    @ApiOperation(value = "트럭 서류 이미지 다운로드")
+    @PostMapping("/truckdocumentimage/{truckId}")
+    public List<TruckDocumentLinkVO> getTruckDocumentImage(@PathVariable long truckId)
+    {
+        return service.getTruckDocumentImage(truckId);
+    }
+
+    @PutMapping("/truckdocument/{truckId}")
+    public void updateTruckDocument(@PathVariable long truckId, TruckDocumentVO tdvo)
+    {
+        service.updateTruckDocument(tdvo);
+    }
+
+    @DeleteMapping("/truckdocument/{truckId}")
+    public void deleteTruckDocument(@PathVariable long truckId, TruckDocumentVO tdvo)
+    {
+        service.deleteTruckDocument(tdvo);
+    }
+}

@@ -1,0 +1,36 @@
+package kr.ac.ajou.umc.service.event;
+
+
+import kr.ac.ajou.umc.repository.event.EventRepository;
+import kr.ac.ajou.umc.vo.event.EventVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class EventService {
+
+    @Autowired
+    private EventRepository repository;
+
+    public List<EventVO> getEventList()
+    {
+        return repository.getEventList();
+    }
+
+    public void addEvent(EventVO event)
+    {
+        repository.addEvent(event);
+    }
+
+    public void updateEvent(EventVO event)
+    {
+        repository.updateEvent(event);
+    }
+
+    public void deleteEvent(EventVO event)
+    {
+        repository.deleteEvent(event);
+    }
+}

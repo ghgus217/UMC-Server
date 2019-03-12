@@ -1,0 +1,41 @@
+package kr.ac.ajou.umc.controller.collection;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import kr.ac.ajou.umc.service.collection.MainPageService;
+import kr.ac.ajou.umc.vo.collection.MainPageGpsVO;
+import kr.ac.ajou.umc.vo.collection.MainPageSearchVO;
+import kr.ac.ajou.umc.vo.collection.MainPageVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@Api(description = "메인 페이지 관련 api")
+@RestController
+public class MainPageController {
+
+    private Logger logger = LoggerFactory.getLogger(MainPageController.class);
+
+    @Autowired
+    private MainPageService service;
+
+    @ApiOperation(value = "메인 페이지 목록 정보 조회")
+    @PostMapping("/mainpage")
+    public MainPageVO getMainPageInfo(@RequestBody MainPageGpsVO gps)
+    {
+        logger.info("메인 페이지 목록 정보 조회");
+
+        return service.getMainPageInfo(gps);
+    }
+
+    
+    @ApiOperation(value = "메인페이지 통합 검색")
+    @PostMapping("/mainpage/{keywords}")
+    public MainPageSearchVO getMainPageSearch(@PathVariable String keywords, @RequestBody MainPageGpsVO gps)
+    {
+        logger.info("메인페이지 통합 검색");
+
+        return service.getMainPageSearch(keywords, gps);
+    }
+}

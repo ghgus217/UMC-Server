@@ -1,0 +1,23 @@
+package kr.ac.ajou.umc.repository.truck;
+
+import kr.ac.ajou.umc.vo.truck.*;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+@Mapper
+public interface TruckRepository {
+
+    List<TruckVO> getTruckList();
+    List<TruckSearchListVO> searchWithTruckName(String truckName);
+    TruckDescriptionVO searchWithTruckId(long id);
+    TruckDescriptionVO checkWithTruckName(String truckName);
+    TruckDescriptionVO searchWithUserId(long userId);
+    void addTruck(TruckCreateVO truck);
+    void updateTruckWithUserId(TruckUpdateWithUserIdVO truck);
+    void updateTruck(TruckUpdateVO truck);
+    void deleteTruck(long id);
+
+}

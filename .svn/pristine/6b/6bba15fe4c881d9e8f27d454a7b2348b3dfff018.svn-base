@@ -1,0 +1,36 @@
+package kr.ac.ajou.umc.service.event;
+
+import kr.ac.ajou.umc.repository.event.EventMapRepository;
+import kr.ac.ajou.umc.vo.event.EventMapVO;
+import org.apache.catalina.servlet4preview.http.PushBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class EventMapService {
+
+    @Autowired
+    private EventMapRepository repository;
+
+    public List<EventMapVO> getEventMapList()
+    {
+        return repository.getEventMapList();
+    }
+
+    public void addEventMap(EventMapVO emvo)
+    {
+        repository.addEventMap(emvo);
+    }
+
+    public void updateEventMap(EventMapVO emvo)
+    {
+        repository.updateEventMap(emvo);
+    }
+
+    public void deleteEventMap(EventMapVO emvo)
+    {
+        repository.deleteEventMap(emvo);
+    }
+}

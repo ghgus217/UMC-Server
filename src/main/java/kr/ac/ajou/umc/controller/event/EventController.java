@@ -1,0 +1,100 @@
+package kr.ac.ajou.umc.controller.event;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
+import kr.ac.ajou.umc.service.event.EventService;
+import kr.ac.ajou.umc.vo.event.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileInputStream;
+import java.util.List;
+
+@Api(description = "이벤트 API")
+@RestController
+public class EventController {
+
+    private Logger logger = LoggerFactory.getLogger(EventController.class);
+
+    @Autowired
+    private EventService service;
+
+    @ApiOperation(value = "전체 이벤트 목록 조회")
+    @GetMapping("/events")
+    public List<EventVO> showEventList()
+    {
+        logger.info("SHOW EVENT LIST");
+
+        List<EventVO> result = service.getEventList();
+
+        return result;
+    }
+
+    @ApiOperation(value = "이벤트 타이틀로 검색")
+    @PostMapping("/event/{eventTitle}")
+    public List<EventSearchListVO> searchWithEventName(@PathVariable String eventTitle, @RequestBody EventGpsVO gps)
+    {
+        logger.info("이벤트 이름으로 검색");
+
+        List<EventSearchListVO> result = service.searchWithEventName(eventTitle, gps);
+
+        return result;
+    }
+
+    @ApiOperation(value = "id로 이벤트 세부정보 조회하기")
+    @GetMapping("/event/{eventId}")
+    public EventDescriptionVO searchWithEventId(@PathVariable long eventId)
+    {
+        logger.info("이벤트ID 로 이벤트 세부정보 검색");
+
+        EventDescriptionVO result = service.searchWithEventId(eventId);
+
+        return result;
+    }
+
+    @ApiOperation(value = "유저 id로 이벤트 세부정보 조회하기")
+    @GetMapping("/eventUserId/{userId}")
+    public List<EventDescriptionVO> searchWithUserId(@PathVariable long userId)
+    {
+        logger.info("유저 ID 로 이벤트 세부정보 검색");
+
+        List<EventDescriptionVO> result = service.searchWithUserId(userId);
+
+        return result;
+    }
+
+    @ApiOperation(value = "이벤트 이미지 업로드")
+    @PostMapping("/eventImage/{eventId}")
+    public void addEventImage(@PathVariable long eventId, @RequestBody MultipartFile file)
+    {
+        service.addEventImage(eventId, file);
+    }
+
+    @ApiOperation(value = "이벤트 추가")
+    @PostMapping("/event")
+    public void addEvent(@RequestBody EventCreateVO event)
+    {
+        service.addEvent(event);
+    }
+
+    @ApiOperation(value = "이벤트 수정")
+    @PutMapping("/event/{eventId}")
+    public void updateEvent(@PathVariable long eventId, @RequestBody EventUpdateVO event)
+    {
+        event.setId(eventId);
+
+        service.updateEvent(event);
+    }
+
+    @ApiOperation(value = "이벤트 삭제")
+    @DeleteMapping("/event/{eventId}")
+    public void deleteEvent(@PathVariable long eventId)
+    {
+        service.deleteEvent(eventId);
+    }
+
+}

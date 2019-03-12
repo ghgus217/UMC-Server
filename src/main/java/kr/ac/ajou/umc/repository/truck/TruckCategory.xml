@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.truck.TruckCategoryRepository">
+
+    <select id="getTruckCategoryList" resultType="TruckCategoryVO">
+        SELECT
+          id, category, modifyTime
+        FROM
+          Truck_Category
+        ORDER BY id DESC
+    </select>
+
+    <insert id="addTruckCategory" parameterType="TruckCategoryVO">
+        INSERT INTO Truck_Category
+          (category, modifyTime)
+        VALUES
+          (#{category}, now())
+    </insert>
+
+    <update id="updateTruckCategory" parameterType="TruckCategoryVO">
+        UPDATE Truck_Category SET
+        <if test="category != null">
+            category = #{category},
+        </if>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteTruckCategory" parameterType="TruckCategoryVO">
+        DELETE FROM Truck_Category
+        WHERE id = #{id}
+    </delete>
+
+
+</mapper>

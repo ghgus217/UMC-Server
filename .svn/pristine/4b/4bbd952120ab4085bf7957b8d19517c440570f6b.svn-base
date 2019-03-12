@@ -1,0 +1,41 @@
+package kr.ac.ajou.umc.service.truck;
+
+import kr.ac.ajou.umc.vo.truck.TruckVO;
+import kr.ac.ajou.umc.repository.truck.TruckRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class TruckService {
+
+    @Autowired
+    private TruckRepository repository;
+
+    public List<TruckVO> getTruckList()
+    {
+        return repository.getTruckList();
+    }
+
+
+    public List<TruckVO> searchTruckName(String truckName)
+    {
+        return  repository.searchTruckName(truckName);
+    }
+
+    public void addTruck(TruckVO truck)
+    {
+        repository.addTruck(truck);
+    }
+
+    public void updateTruck(TruckVO truck)
+    {
+        repository.updateTruck(truck);
+    }
+
+    public void deleteTruck(TruckVO truck)
+    {
+        repository.deleteTruck(truck);
+    }
+}

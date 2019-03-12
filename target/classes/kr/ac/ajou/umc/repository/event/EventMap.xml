@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.ajou.umc.repository.event.EventMapRepository">
+    <select id="getEventMapList" resultType="EventMapSearchVO">
+        SELECT
+          id, eventId, truckId, positionName, lat, lon
+        FROM
+          Event_Map
+        ORDER BY eventId DESC
+    </select>
+
+    <select id="searchEventMapWithEventId" parameterType="long" resultType="EventMapSearchVO">
+        SELECT
+          id, eventId, truckId, positionName, lat, lon
+        FROM
+          Event_Map
+        WHERE eventId = #{eventId}
+    </select>
+
+    <insert id="addEventMap" parameterType="EventMapCreateVO">
+        INSERT INTO Event_Map
+          (eventId, truckId, positionName, lat, lon, modifyTime)
+        VALUES
+          (#{eventId}, #{truckId}, #{positionName}, #{lat}, #{lon}, now())
+    </insert>
+
+    <update id="updateEventMap" parameterType="EventMapUpdateVO">
+        UPDATE Event_Map SET
+        <if test="truckId != null">
+            truckId = #{truckId},
+        </if>
+        <if test="positionName != null">
+            positionName = #{positionName},
+        </if>
+        <if test="lat != null">
+            lat = #{lat},
+        </if>
+        <if test="lon != null">
+            lon = #{lon},
+        </if>
+          modifyTime = now()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteEventMap" parameterType="long">
+        DELETE FROM Event_Map
+        WHERE id = #{eventMapId}
+    </delete>
+
+    <delete id="deleteEventMapWhole" parameterType="long">
+        DELETE FROM Event_Map
+        WHERE eventId = #{eventId}
+    </delete>
+
+
+</mapper>
